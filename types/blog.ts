@@ -6,4 +6,11 @@ export type Blog = {
   revisedAt: string;
   title: string;
   body: string;
+  category: Category;
 };
+
+export type Category = {
+  id: string;
+  name: string;
+} | undefined;
+

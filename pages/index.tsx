@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Link from "next/link";
 import { client } from "../libs/client";
-import { Blog } from "../types/blog";
+import { Blog, Category } from "../types/blog";
 import Pagination from '@/components/pagination';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,21 +12,24 @@ const inter = Inter({ subsets: ['latin'] })
 type Props = {
   blog: Array<Blog>;
   totalCount: number;
+  category: Array<Category>;
 };
 
 export const getStaticProps = async () => {
   const data = await client.get({ endpoint: "blog", queries: { offset: 0, limit: 5 }});
+  const categoryData = await client.get({endpoint: "categories"});
 
   return {
     props: {
       blog: data.contents,
-      totalCount: data.totalCount
+      totalCount: data.totalCount,
+      category: categoryData.contents
     },
   };
 };
 
-const Home = ({blog, totalCount}: Props ) => {
-  console.log(totalCount)
+const Home = ({blog, totalCount, category}: Props) => {
+  // console.log(category)
 
   return (
     <>
@@ -39,6 +42,19 @@ const Home = ({blog, totalCount}: Props ) => {
       <div className="py-5 text-center w-full">
         <h1 className="text-xl font-semibold">記事一覧</h1>
         <div >
+          <p>
+            カテゴリー
+          </p>
+          <ul className="mb-5">
+          {category.map((category) => (
+            category && (
+            <li key={category.id}>
+              <Link href={`/category/${category.id}`}>{category.name}</Link>
+            </li>
+            )
+          ))}
+          </ul>
+          <p>記事タイトル</p>
           <ul>
           {blog.map((blog) => (
             <li key={blog.id}>

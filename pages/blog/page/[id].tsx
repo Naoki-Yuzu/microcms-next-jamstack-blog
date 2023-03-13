@@ -37,7 +37,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 const BlogPageId = ({blog, totalCount}: Props) => {
   return (
-    <div>
+    <div className="text-center w-full">
       <ul>
         {blog.map(blog => (
           <li key={blog.id}>

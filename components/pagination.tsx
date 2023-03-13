@@ -6,9 +6,9 @@ const Pagination = ({ totalCount } : {totalCount: number}) => {
   const range = (start: number, end: number) => [...Array(end - start + 1)].map((_, i) => start + i)
 
   return (
-    <ul>
+    <ul className="flex justify-center gap-2">
       {range(1, Math.ceil(totalCount / PER_RANGE)).map((number, index) => (
-        <li key={index}>
+        <li className="border" key={index}>
           <Link href={`/blog/page/${number}`}>{number}</Link>
         </li>
       ))}

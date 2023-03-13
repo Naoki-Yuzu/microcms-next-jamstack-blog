@@ -40,6 +40,7 @@ export const getStaticProps: GetStaticProps  = async (context) => {
 };
 
 const BlogId = ({blog}: Props) => {
+
   return (
     <>
       <Head>
@@ -51,6 +52,7 @@ const BlogId = ({blog}: Props) => {
       <main className="p-3 flex flex-col justify-center items-center">
         <h1>{blog.title}</h1>
         <p>{blog.publishedAt}</p>
+        <p>カテゴリー : {blog.category ? blog.category.name : "なし"}</p>
         <div className="prose"
         dangerouslySetInnerHTML={{
           __html: `${blog.body}`,
