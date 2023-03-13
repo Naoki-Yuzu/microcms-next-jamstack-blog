@@ -1,9 +1,17 @@
+import Pagination from '@/components/pagination';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from "next/link";
 import { client } from "../../libs/client";
 import { Blog } from "../../types/blog";
+
+// const PER_PAGE = 5;
+
+// type Props = {
+//   blog: Array<Blog>;
+//   totalCount: number;
+// };
 
 type Props = {
   blog: Blog;
@@ -54,3 +62,44 @@ const BlogId = ({blog}: Props) => {
 }
 
 export default BlogId;
+
+// export const getStaticPaths = async () => {
+//   const repos = await client.get({ endpoint: "blog" });
+
+//   const range = (start: number, end: number) => [...Array(end - start + 1)].map((_, i) => start + i);
+
+//   const paths = range(1, Math.ceil(repos.totalCount / PER_PAGE)).map((repo) => `/blog/page/${repo}`);
+
+//   return { paths, fallback: false };
+// };
+
+// export const getStaticProps = async (context: any) => {
+//   const id = context.params.id;
+//   const data = await client.get({ endpoint: "blog", queries: { offset: (id - 1) * 5, limit: 5 } });
+
+//   return {
+//     props: {
+//       blog: data.contents,
+//       totalCount: data.totalCount,
+//     },
+//   };
+// }
+
+// const BlogPageId = ({blog, totalCount}: Props) => {
+//   console.log(blog)
+
+//   return (
+//     <div>
+//       <ul>
+//         {blog.map(blog => (
+//           <li key={blog.id}>
+//             <Link href={`/blog/${blog.id}`}>{blog.title}</Link>
+//           </li>
+//         ))}
+//       </ul>
+//       <Pagination totalCount={totalCount}/>
+//     </div>
+//   )
+// }
+
+// export default BlogPageId;

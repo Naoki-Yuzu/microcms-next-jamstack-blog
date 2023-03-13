@@ -5,24 +5,29 @@ import styles from '@/styles/Home.module.css'
 import Link from "next/link";
 import { client } from "../libs/client";
 import { Blog } from "../types/blog";
+import Pagination from '@/components/pagination';
 
 const inter = Inter({ subsets: ['latin'] })
 
 type Props = {
   blog: Array<Blog>;
+  totalCount: number;
 };
 
 export const getStaticProps = async () => {
-  const data = await client.get({ endpoint: "blog" });
+  const data = await client.get({ endpoint: "blog", queries: { offset: 0, limit: 5 }});
 
   return {
     props: {
       blog: data.contents,
+      totalCount: data.totalCount
     },
   };
 };
 
-const Home = ({blog}: Props) => {
+const Home = ({blog, totalCount}: Props ) => {
+  console.log(totalCount)
+
   return (
     <>
       <Head>
@@ -42,6 +47,7 @@ const Home = ({blog}: Props) => {
           ))}
           </ul>
         </div>
+        <Pagination totalCount={totalCount}/>
       </div>
     </>
   )
